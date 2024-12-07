@@ -17,8 +17,8 @@
 
     body {
       font-family: "Lexend", sans-serif;
-      background-color: #ffffff; 
-      color: #e5ebf3;
+      background-color: #ffffff; /* 전체 배경색을 흰색으로 설정 */
+      color: #000000; /* 텍스트 색상 */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -31,10 +31,9 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background-color: #ffffff;
+      background-color: #ffffff; /* 슬라이더 배경도 흰색으로 설정 */
     }
 
-  
     .slide {
       position: absolute;
       top: 0;
@@ -43,11 +42,11 @@
       height: 100%;
       opacity: 0;
       transition: opacity 0.4s ease-in-out;
-      background-size: contain; /* 크기를 슬라이더에 맞춤 */
-      background-repeat: no-repeat; /* 이미지 반복 방지 */
-      background-position: center; /* 이미지를 중앙에 배치 */
-      background-color: #ffffff; 
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
     }
+
     .slide.current {
       opacity: 1;
     }
@@ -55,9 +54,9 @@
     .buttons button {
       position: absolute;
       top: 50%;
-      border: 2px solid #e5ebf3;
-      background-color: transparent;
-      color: #e5ebf3;
+      border: 2px solid #000000; /* 버튼 테두리를 검은색으로 변경 */
+      background-color: #ffffff; /* 버튼 배경 흰색 */
+      color: #000000; /* 버튼 아이콘 색상 검은색 */
       cursor: pointer;
       padding: 13px 15px;
       border-radius: 50%;
@@ -74,8 +73,8 @@
     }
 
     .buttons button:hover {
-      background-color: #e5ebf3;
-      color: #362a2b;
+      background-color: #000000;
+      color: #ffffff;
     }
   </style>
 </head>
@@ -88,29 +87,26 @@
   </div>
 
   <script>
-    // 이미지 URL 배열
     const imageUrls = [
-      "https://imaclab.github.io/web-home/image01.png",
-      "https://imaclab.github.io/web-home/image02.png",
+      "https://imaclab.github.io/web-resources/image01.png",
+      "https://imaclab.github.io/web-resources/image02.png",
     ];
 
-    // 슬라이더 컨테이너 가져오기
     const slider = document.querySelector(".slider");
 
     // 이미지 URL을 기반으로 슬라이드 동적 생성
-   imageUrls.forEach((url, index) => {
-    const slide = document.createElement("div");
-    slide.classList.add("slide");
-    if (index === 0) slide.classList.add("current"); // 첫 번째 슬라이드에 'current' 클래스 추가
+    imageUrls.forEach((url, index) => {
+      const slide = document.createElement("div");
+      slide.classList.add("slide");
+      if (index === 0) slide.classList.add("current");
 
-    // 배경 이미지 설정
-    slide.style.backgroundImage = `url(${url})`;
+      // 배경 이미지 설정
+      slide.style.backgroundImage = `url(${url})`;
 
-    slider.appendChild(slide); // 슬라이더에 슬라이드 추가
-  });
-    
-    // 슬라이드 요소 동적 갱신
-    let slides = document.querySelectorAll(".slide");
+      slider.appendChild(slide); // 슬라이더에 슬라이드 추가
+    });
+
+    const slides = document.querySelectorAll(".slide");
     const nextButton = document.getElementById("next");
     const prevButton = document.getElementById("prev");
     const auto = true;
