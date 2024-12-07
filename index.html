@@ -33,6 +33,7 @@
       overflow: hidden;
     }
 
+  
     .slide {
       position: absolute;
       top: 0;
@@ -41,8 +42,10 @@
       height: 100%;
       opacity: 0;
       transition: opacity 0.4s ease-in-out;
+      background-size: contain; /* 크기를 슬라이더에 맞춤 */
+      background-repeat: no-repeat; /* 이미지 반복 방지 */
+      background-position: center; /* 이미지를 중앙에 배치 */
     }
-
     .slide.current {
       opacity: 1;
     }
@@ -93,22 +96,17 @@
     const slider = document.querySelector(".slider");
 
     // 이미지 URL을 기반으로 슬라이드 동적 생성
-  imageUrls.forEach((url, index) => {
+   imageUrls.forEach((url, index) => {
     const slide = document.createElement("div");
     slide.classList.add("slide");
     if (index === 0) slide.classList.add("current"); // 첫 번째 슬라이드에 'current' 클래스 추가
 
-    // 이미지 태그 생성
-    const img = document.createElement("img");
-    img.src = url;
-    img.alt = `Slide ${index + 1}`;
-    img.style.width = "100%"; // 슬라이더 너비에 맞춤
-    img.style.height = "100%"; // 슬라이더 높이에 맞춤
-    img.style.objectFit = "contain"; // 비율 유지하며 크기 조정
+    // 배경 이미지 설정
+    slide.style.backgroundImage = `url(${url})`;
 
-    slide.appendChild(img); // 슬라이드에 이미지 추가
     slider.appendChild(slide); // 슬라이더에 슬라이드 추가
   });
+    
     // 슬라이드 요소 동적 갱신
     let slides = document.querySelectorAll(".slide");
     const nextButton = document.getElementById("next");
