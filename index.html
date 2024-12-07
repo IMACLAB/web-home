@@ -87,13 +87,12 @@
     const imageUrls = [
       "https://imaclab.github.io/web-home/image01.png",
       "https://imaclab.github.io/web-home/image02.png",
-      // 추가 URL을 여기에 입력
     ];
 
     // 슬라이더 컨테이너 가져오기
     const slider = document.querySelector(".slider");
 
-    // 이미지 URL을 기반으로 슬라이드 생성
+    // 이미지 URL을 기반으로 슬라이드 동적 생성
     imageUrls.forEach((url, index) => {
       const slide = document.createElement("div");
       slide.classList.add("slide");
@@ -102,7 +101,8 @@
       slider.appendChild(slide);
     });
 
-    const slides = document.querySelectorAll(".slide");
+    // 슬라이드 요소 동적 갱신
+    let slides = document.querySelectorAll(".slide");
     const nextButton = document.getElementById("next");
     const prevButton = document.getElementById("prev");
     const auto = true;
@@ -112,7 +112,7 @@
     const nextSlide = () => {
       const current = document.querySelector(".current");
       current.classList.remove("current");
-      if (current.nextElementSibling) {
+      if (current.nextElementSibling && current.nextElementSibling.classList.contains("slide")) {
         current.nextElementSibling.classList.add("current");
       } else {
         slides[0].classList.add("current");
@@ -122,7 +122,7 @@
     const prevSlide = () => {
       const current = document.querySelector(".current");
       current.classList.remove("current");
-      if (current.previousElementSibling) {
+      if (current.previousElementSibling && current.previousElementSibling.classList.contains("slide")) {
         current.previousElementSibling.classList.add("current");
       } else {
         slides[slides.length - 1].classList.add("current");
