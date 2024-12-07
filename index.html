@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modern Image Slider</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@400;700&display=swap");
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Lexend", sans-serif;
+      background-color: #f9f9f9; /* 밝은 회색 배경 */
+      color: #333; /* 다크 텍스트 색상 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .slider {
+      position: relative;
+      width: 90vw;
+      height: 60vh;
+      border-radius: 15px; /* 둥근 모서리 */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 부드러운 그림자 */
+      overflow: hidden;
+      background-color: #ffffff; /* 흰색 슬라이더 배경 */
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .slide.current {
+      opacity: 1;
+    }
+
+    .buttons button {
+      position: absolute;
+      top: 50%;
+      background-color: #ffffff; /* 버튼 배경 흰색 */
+      color: #333; /* 버튼 텍스트 색상 */
+      cursor: pointer;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
+      outline: none;
+      transform: translateY(-50%);
+      transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .buttons button:hover {
+      background-color: #333; /* 호버 시 버튼 배경 다크 */
+      color: #ffffff; /* 호버 시 텍스트 흰색 */
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* 그림자 증가 */
+    }
+
+    .buttons button#prev {
+      left: 15px;
+    }
+
+    .buttons button#next {
+      right: 15px;
+    }
+
+    .buttons i {
+      font-size: 20px; /* 화살표 크기 */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider"></div>
+  <div class="buttons">
+    <button id="prev"><i class="fas fa-arrow-left"></i></button>
+    <button id="next"><i class="fas fa-arrow-right"></i></button>
+  </div>
+
+  <script>
+    const imageUrls = [
+      "https://imaclab.github.io/web-resources/image01.png",
+      "https://imaclab.github.io/web-resources/image02.png",
+    ];
+
+    const slider = document.querySelector(".slider");
+
+    // 이미지 URL을 기반으로 슬라이드 동적 생성
+    imageUrls.forEach((url, index) => {
+      const slide = document.createElement("div");
+      slide.classList.add("slide");
+      if (index === 0) slide.classList.add("current");
+
+      // 배경 이미지 설정
+      slide.style.backgroundImage = `url(${url})`;
+
+      slider.appendChild(slide); // 슬라이더에 슬라이드 추가
+    });
+
+    const slides = document.querySelectorAll(".slide");
+    const nextButton = document.getElementById("next");
+    const prevButton = document.getElementById("prev");
+    const auto = true;
+    const intervalTime = 5000;
+    let slideInterval;
+
+    const nextSlide = () => {
+      const current = document.querySelector(".current");
+      current.classList.remove("current");
+      if (current.nextElementSibling && current.nextElementSibling.classList.contains("slide")) {
+        current.nextElementSibling.classList.add("current");
+      } else {
+        slides[0].classList.add("current");
+      }
+    };
+
+    const prevSlide = () => {
+      const current = document.querySelector(".current");
+      current.classList.remove("current");
+      if (current.previousElementSibling && current.previousElementSibling.classList.contains("slide")) {
+        current.previousElementSibling.classList.add("current");
+      } else {
+        slides[slides.length - 1].classList.add("current");
+      }
+    };
+
+    nextButton.addEventListener("click", () => {
+      nextSlide();
+      if (auto) {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, intervalTime);
+      }
+    });
+
+    prevButton.addEventListener("click", () => {
+      prevSlide();
+      if (auto) {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, intervalTime);
+      }
+    });
+
+    if (auto) {
+      slideInterval = setInterval(nextSlide, intervalTime);
+    }
+  </script>
+</body>
+
+</html>
